@@ -1,13 +1,17 @@
 __author__ = 'Ran'
-from app import Flask, cache
+from app import Flask, cache, login_manager
 from ..account import account
 from flask import render_template, request, session, redirect
 from flask_login import login_user, login_required, logout_user, current_user
 from app.DB_account import Account
 import json
 
+@login_manager.user_loader
+def load_user(user_id):
+    return Account.query.filter_by(id=user_id).first()
+
 #登录
-@account.route('/auth')
+@account.route('/auth', methods=["POST"])
 def authaccount():
     if current_user.is_authenticated:
         return json.dumps({'code': 0, 'text': '你已登录过'})
@@ -17,6 +21,7 @@ def authaccount():
 
             # 获取json数据
             jsondata = request.json
+            print(request.json)
 
             # 判断用户输入的内容是否为空
             if jsondata['account'] == '':
@@ -31,13 +36,14 @@ def authaccount():
                     return json.dumps({'code': 0, 'text': '账户不存在'})
 
 #注册
-@account.route('/register')
+@account.route('/register', methods=["POST"])
 def registeraccount():
     if current_user.is_authenticated:
         return json.dumps({'code': 0, 'text': '你已登录过'})
 
     else:
         if request.method == 'POST':
+            print(request.json)
 
             # 获取json数据
             jsondata = request.json

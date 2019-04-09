@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from app import db
 from flask_login import UserMixin, current_user
-from flask_bcrypt import check_password_hash, generate_password_hash
 
 # 账户表
 class Account(db.Model, UserMixin):
@@ -14,7 +13,7 @@ class Account(db.Model, UserMixin):
     money = db.Column(db.Integer)
 
     # 定义对象
-    def __init__(self, accounts=None, money=None):
+    def __init__(self, accounts=None, money=0):
         self.accounts = accounts
         self.money = money
         self.update()  # 提交数据
