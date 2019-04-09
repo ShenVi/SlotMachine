@@ -22,7 +22,7 @@ def result():
 
             user = Account.query.filter_by(id=current_user.id).first()
 
-            if user.money < 5:
+            if user.money > 0:
 
                 purchase()
                 '''
@@ -46,7 +46,8 @@ def result():
                     'roc_date':roc.date,
                     'roc_expendituremoney':roc.expendituremoney,
                     'roc_income':roc.income,
-                    'roc_money':roc.money
+                    'roc_money':roc.money,
+                    'data':roc.data
                 }
 
                 print(jsons)
@@ -62,23 +63,24 @@ def result():
         pass
 
 def result_reward(a, b, c):
+    data = str(a) + " - " + str(b) + " - " + str(c)
     if a == b & a == c:
         gamereward(3)
-        roc = Bill(expendituremoney=None, income=50, money=Account.query.filter_by(id=current_user.id).first().money)
+        roc = Bill(expendituremoney=None, income=50, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
         return 50, 3, roc
 
     elif a == b or b == c:
         gamereward(2)
-        roc = Bill(expendituremoney=None, income=20, money=Account.query.filter_by(id=current_user.id).first().money)
+        roc = Bill(expendituremoney=None, income=20, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
         return 20, 2, roc
 
     elif a == c:
         gamereward(2)
-        roc = Bill(expendituremoney=None, income=20, money=Account.query.filter_by(id=current_user.id).first().money)
+        roc = Bill(expendituremoney=None, income=20, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
         return 20, 31, roc
 
     else:
-        roc = Bill(expendituremoney=5, income=0, money=Account.query.filter_by(id=current_user.id).first().money)
+        roc = Bill(expendituremoney=5, income=0, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
         return 0, 0, roc
 
 

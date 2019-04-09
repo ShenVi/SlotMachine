@@ -11,7 +11,10 @@
     #page{width: 90%;margin: 0 auto;margin-bottom: 10px;border-top: 1px solid #cecece;overflow: hidden;}
     #page-1{width: calc(30% - 1px);float: left;border-right: 1px solid #cecece;margin-top: 10px;height: 250px;text-align: center;}
     #page-2{width: 60%;float: left;margin-top: 10px;margin-left: 30px;height: 250px;}
-    #page-2>p{font-size: 18px; background-color: #e9f2f5;padding: 17px;border-radius: 5px;}
+    #page-2>p{font-size: 14px; background-color: #e9f2f5;padding: 23px;border-radius: 5px;}
+    .poclist>li{width: calc(100% - 30px);padding-left: 15px;padding-right: 15px;margin-bottom: 10px;height: 50px;line-height: 50px;list-style: none;}
+    .poclist>li:hover{background-color: #00abff;color: #fff}
+    .poclist>li>div{width: 20%;float: left;text-align: center}
 </style>
 <header class="header">
     <div class="header-wp">
@@ -23,13 +26,13 @@
     <div id="a">0</div>
     <div id="b">0</div>
     <div id="c">0</div>
-    <button id="get">点我开始</button>
+    <button id="get">点我开始(每次5元)</button>
 </div>
 <div id="page">
 
     <div id="page-1">
             <div style="margin-top: 50px;font-size: 36px;color: #00abff" id="money">{{ current_user.money }}</div>
-        <div style="margin-top: 50px;">账户剩余金额</div>
+        <div style="margin-top: 50px;">账户剩余金额(低于5元无法使用)</div>
 
     </div>
     <div id="page-2">
@@ -38,30 +41,67 @@
         <p>0 - 0 - 0 3个数字一致(反50元)</p>
     </div>
 </div>
-<div id="page">
-    
+<div id="page" class="poclist">
 </div>
 <script>
+    function addroc(data) {
+        console.log(data)
+        $(".poclist").prepend('<li>' +
+            '<div> 支出 <span>' + data['roc_expendituremoney'] + '</span></div>' +
+            '<div> 收入 <span>' + data['roc_income'] + '</span></div>' +
+            '<div> 结果 <span>' + data['data'] + '</span></div>' +
+            '<div>' + data["roc_date"] + '</div>' +
+            '<div> 余额 <span>' + data['roc_money'] + '</span></div>' +
+            '</li>')
+    }
+
     $("#get").click(function () {
-        $("#get").html("正在摇奖中.....")
-        $.ajax({
-            url: '/game/get-result', //api
-            type: 'POST',
-            async: true,
-            cache: false,
-            contentType: "application/json; charset=utf-8",
-            processData: false,
-            dataType: 'json',
-            success: function (returndata) {
-                $("#a").html(returndata['a'])
-                $("#b").html(returndata['b'])
-                $("#c").html(returndata['c'])
-                $("#money").html(returndata['money'])
-                $("#get").html("重新摇码")
-            },
-            error: function (returndata) {
-                alert('系统繁忙')
-            }
-        })
+
+        if (parseInt($("#money").html()) < 5) {
+            alert('金额不足')
+        } else {
+
+            $("#get").html("正在摇奖中.....")
+            $.ajax({
+                url: '/game/get-result', //api
+                type: 'POST',
+                async: true,
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                processData: false,
+                dataType: 'json',
+                success: function (returndata) {
+                    $("#a").html(returndata['a'])
+                    $("#b").html(returndata['b'])
+                    $("#c").html(returndata['c'])
+                    $("#money").html(returndata['money'])
+                    $("#get").html("重新摇码")
+                    if (returndata['roc_expendituremoney'] == null) {
+                        roc_expendituremoney = 0
+                    } else {
+                        roc_expendituremoney = returndata['roc_expendituremoney']
+                    }
+                    if (returndata['roc_income'] == null) {
+                        roc_income = 0
+                    } else {
+                        roc_income = returndata['roc_income']
+                    }
+                    rocdata = {
+                        'roc_date': returndata['roc_date'],
+                        'roc_expendituremoney': roc_expendituremoney,
+                        'roc_money': returndata['roc_money'],
+                        'roc_income': roc_income,
+                        'data':returndata['data']
+                    }
+                    //console.log(rocdata)
+                    addroc(rocdata)
+                },
+                error: function (returndata) {
+                    alert('系统繁忙')
+                }
+            })
+
+        }
+
     })
 </script>
