@@ -1,7 +1,7 @@
 __author__ = 'Ran'
 from app import Flask, cache, login_manager
 from ..account import account
-from flask import render_template, request, session, redirect
+from flask import render_template, request, session, redirect, url_for
 from flask_login import login_user, login_required, logout_user, current_user
 from app.DB_account import Account
 import json
@@ -55,3 +55,10 @@ def registeraccount():
                 Account(accounts = jsondata['account'])
                 #自动提交数据库
                 return json.dumps({'code': 1, 'text': '注册成功'})
+
+#退出登录
+@account.route("/logout", methods=["GET"])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index.home'))
