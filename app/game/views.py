@@ -5,7 +5,7 @@ from flask import render_template, request, session, redirect
 from flask_login import current_user
 from app.redis import establish_token
 from app.DB_account import Account
-from app.payment import purchase
+from app.payment import purchase, gamereward
 import random
 
 import json
@@ -24,12 +24,17 @@ def result():
             if user.money < 5:
 
                 purchase()
-                '''purchase() 账户-5元'''
+                '''
+                    purchase() 账户-5元 消费
+                '''
 
                 a = random.choice([1,2,3,4,5,6,7,8,9,10,11,12])
                 b = random.choice([1,2,3,4,5,6,7,8,9,10,11,12])
                 c = random.choice([1,2,3,4,5,6,7,8,9,10,11,12])
-                return json.dumps({'code':1, 'a':a, 'b':b, 'c':c})
+
+                reward = result_reward(a, b, c)
+
+                return json.dumps({'code':1, 'a':a, 'b':b, 'c':c, 'gamereward':reward['addmoney']})
 
             else:
                 return json.dumps({'code':0, 'text':'游戏币不足'})
@@ -38,6 +43,19 @@ def result():
             pass
     else:
         pass
+
+def result_reward(a, b, c):
+    if a == b & c:
+        gamereward(3)
+        return {'type':3, 'addmoney':50}
+
+    elif a == b or b == c:
+        gamereward(2)
+        return {'type':2, 'addmoney':5}
+
+    else:
+        return {'type':0, 'addmoney':0}
+
 
 #验证密匙
 @game.route('/get-tokon')
