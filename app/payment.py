@@ -1,6 +1,7 @@
 __author__ = 'Ran'
 from app import db
 from app.DB_account import Account
+from app.DB_module import Bill
 from flask_login import current_user
 
 def purchase():
@@ -10,9 +11,11 @@ def purchase():
 
 def gamereward(rewardtype):
     if int(rewardtype) == 2:
-        money = int(Account.query.filter_by(id = current_user.id).first().money) + 5
+        money = int(Account.query.filter_by(id = current_user.id).first().money) + 20
+        
     elif int(rewardtype) == 3:
         money = int(Account.query.filter_by(id = current_user.id).first().money) + 50
+
     else:
         money = Account.query.filter_by(id = current_user.id).first().money
 
