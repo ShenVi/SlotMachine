@@ -1,10 +1,19 @@
 # SlotMachine
 基于Python Flask开发的老虎机Dome 禁止商业使用或个人运营
 
+### 更新历史
+|版本|内容|
+|--|--|
+|v1.0 |主要基础代码工程。|
+
 #### 使用方法
 下载dome到本地 安装依赖库 启动地址为127.0.0.1 需要mysql支持
 
 在 __config.py__ 内修改数据库地址
+
+#### 返回数据结构
+{'code': 1, 'a': 1, 'b': 8, 'c': 4, 'reward': 0, 'type': 0, 'money': 60, 'roc_date': '2019-04-10 05:55:18', 'roc_expendituremoney': 5, 'roc_income': 0, 'roc_money': 60, 'data': '1 - 8 - 4'}
+本项目全部页面采用ajax交互开发 可嵌套H5移动端 （仅限参考）
 
 ## 项目结构
     *app
