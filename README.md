@@ -8,27 +8,27 @@
 
 ## 项目结构
     *app
-    **account(账户api)
-    ***登录
-    ***注册
-    ***登出
-    **game(游戏逻辑部分)
-    ***生成游戏结果
-    ***判断奖励机制
-    ***数据库消费记录生成
-    **index*(主界面视图)
-    ***根据用户是否登录渲染指定文件 未登录渲染index 登录后渲染game
-    **temolates
-    ***index.html 登录注册界面
-    ***game.html 游戏界面
-    ***roc.html 消费记录页面
-    **DB_account.py 账户数据库
-    **DB_module.py 扩展数据库（消费记录）
-    **blueprint.py 蓝图模块
-    **payment.py 支付
-    ***purchase() 每参与一次 扣除5元
-    ***gamereward() 奖励 更新用户金额添加数额
-    **redis.py
+        **account(账户api)
+            ***登录
+            ***注册
+            ***登出
+        **game(游戏逻辑部分)
+            ***生成游戏结果
+            ***判断奖励机制
+            ***数据库消费记录生成
+        **index*(主界面视图)
+            ***根据用户是否登录渲染指定文件 未登录渲染index 登录后渲染game
+        **temolates
+            ***index.html 登录注册界面
+            ***game.html 游戏界面
+            ***roc.html 消费记录页面
+        **DB_account.py 账户数据库
+        **DB_module.py 扩展数据库（消费记录）
+        **blueprint.py 蓝图模块
+        **payment.py 支付
+            ***purchase() 每参与一次 扣除5元
+            ***gamereward() 奖励 更新用户金额添加数额
+        **redis.py
 
 老虎机主界面
 ![Image text](https://github.com/ShenVi/SlotMachine/blob/master/img/1.jpg)
