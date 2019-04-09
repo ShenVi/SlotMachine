@@ -11,3 +11,9 @@ def home():
         return render_template('game.html')
     else:
         return render_template('index.html')
+
+#首页
+@index.route('/roc')
+def roc():
+    if current_user.is_authenticated:
+        return render_template('roc.html')
