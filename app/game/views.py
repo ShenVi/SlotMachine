@@ -66,17 +66,17 @@ def result_reward(a, b, c):
     data = str(a) + " - " + str(b) + " - " + str(c)
     if a == b & a == c:
         gamereward(3)
-        roc = Bill(expendituremoney=None, income=50, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
+        roc = Bill(expendituremoney=5, income=50, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
         return 50, 3, roc
 
     elif a == b or b == c:
         gamereward(2)
-        roc = Bill(expendituremoney=None, income=20, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
+        roc = Bill(expendituremoney=5, income=20, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
         return 20, 2, roc
 
     elif a == c:
         gamereward(2)
-        roc = Bill(expendituremoney=None, income=20, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
+        roc = Bill(expendituremoney=5, income=20, money=Account.query.filter_by(id=current_user.id).first().money, data=data)
         return 20, 31, roc
 
     else:
