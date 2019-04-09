@@ -7,9 +7,13 @@
 |v1.0 |主要基础代码工程。|
 
 #### 使用方法
-下载dome到本地 安装依赖库 启动地址为127.0.0.1 需要mysql支持
+下载dome到本地 安装依赖库 运行python run.py执行flask应用
+默认访问地址为127.0.0.1 改用域名需要设置blueprint.py(蓝图)内的 app.config['SERVER_NAME'] 以及 app.register_blueprint的 subdomain='www'参数
+项目使用数据库为mysql 请先在在 __config.py__ 内修改数据库地址 写你的数据库 并且在DB_module.py下解除db.create_all()的封印 即刻创建数据库表格
 
-在 __config.py__ 内修改数据库地址
+每个账户的默认注册金额为0 需要设置默认注册金额在 DB_account.py内的 Account类下 修改 __init__(self, accounts=None, money=0(修改成你要的默认用户金额)):
+
+该工程只是一个dome 注册界面仅需填写一个账户即刻注册 登录页面输入账户即刻登录账户 需要密码的请在DB_account.py内的 Account类下添加password字段并且在登录添加密码验证的功能
 
 #### 返回数据结构
 {'code': 1, 'a': 1, 'b': 8, 'c': 4, 'reward': 0, 'type': 0, 'money': 60, 'roc_date': '2019-04-10 05:55:18', 'roc_expendituremoney': 5, 'roc_income': 0, 'roc_money': 60, 'data': '1 - 8 - 4'}
