@@ -8,7 +8,9 @@
 
 #### 使用方法
 下载dome到本地 安装依赖库 运行python run.py执行flask应用
+
 默认访问地址为127.0.0.1 改用域名需要设置blueprint.py(蓝图)内的 app.config['SERVER_NAME'] 以及 app.register_blueprint的 subdomain='www'参数
+
 项目使用数据库为mysql 请先在在 __config.py__ 内修改数据库地址 写你的数据库 并且在DB_module.py下解除db.create_all()的封印 即刻创建数据库表格
 
 每个账户的默认注册金额为0 需要设置默认注册金额在 DB_account.py内的 Account类下 修改 __init__(self, accounts=None, money=0(修改成你要的默认用户金额)):
