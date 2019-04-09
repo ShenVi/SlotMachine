@@ -22,7 +22,7 @@ def authaccount():
             if jsondata['account'] == '':
                 return json.dumps({'code': 0, 'text': '账户不能为空'})
             else:
-                user = Account.query.filter_by(key = jsondata['account']).first()
+                user = Account.query.filter_by(accounts = jsondata['account']).first()
                 if(user):
                     session.permanent = True
                     login_user(user, remember=True)
@@ -46,6 +46,6 @@ def registeraccount():
             if jsondata['account'] == '':
                 return json.dumps({'code': 0, 'text': '账户不能为空'})
             else:
-                Account(key=jsondata['account'])
+                Account(accounts = jsondata['account'])
                 #自动提交数据库
                 return json.dumps({'code': 1, 'text': '注册成功'})

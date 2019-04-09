@@ -10,11 +10,13 @@ class Account(db.Model, UserMixin):
     __tablename__ = 'account'
 
     id = db.Column(db.Integer, primary_key=True)
-    key = db.Column(db.Text)
+    accounts = db.Column(db.Text)
+    money = db.Column(db.Integer)
 
     # 定义对象
-    def __init__(self, key=None):
-        self.key = key
+    def __init__(self, accounts=None, money=None):
+        self.accounts = accounts
+        self.money = money
         self.update()  # 提交数据
 
     # 提交数据函数
